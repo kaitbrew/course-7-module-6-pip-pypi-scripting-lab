@@ -9,12 +9,13 @@ def fetch_data():
     return {}
 
 def generate_log(data):
-    log_data = ["Entry one","Entry two","Entry three"]
 
-    if isinstance(data,list):
-            filename=f"log_{datetime.now().strftime('%Y%m%d')}.txt"
+    if not isinstance(data,list):
+        raise ValueError("This should be a list")
+
+    filename=f"log_{datetime.now().strftime('%Y%m%d')}.txt"
     with open(filename,"w",newline="") as file:
-        for entry in log_data:
+        for entry in data:
                 file.write(f"{entry}\n")
 
     print(f"Log written to {filename}")
@@ -23,14 +24,3 @@ def generate_log(data):
 if __name__ == "__main__":
     post = fetch_data()
     print("Fetched Post Title:", post.get("title", "No title found"))
-
-
-
-    # STEP 2: Generate a filename with today's date (e.g., "log_20250408.txt")
-    # Hint: Use datetime.now().strftime("%Y%m%d")
-
-    # STEP 3: Write the log entries to a file using File I/O
-    # Use a with open() block and write each line from the data list
-    # Example: file.write(f"{entry}\n")
-
-    # STEP 4: Print a confirmation message with the filename
