@@ -1,6 +1,5 @@
 from datetime import datetime
 import os
-import csv
 import requests
 
 def fetch_data():
@@ -9,20 +8,23 @@ def fetch_data():
         return response.json()
     return {}
 
+def generate_log(data):
+    log_data = ["Entry one","Entry two","Entry three"]
+
+    if isinstance(data,list):
+            filename=f"log_{datetime.now().strftime('%Y%m%d')}.txt"
+    with open(filename,"w",newline="") as file:
+        for entry in log_data:
+                file.write(f"{entry}\n")
+
+    print(f"Log written to {filename}")
+    return filename
+
 if __name__ == "__main__":
     post = fetch_data()
     print("Fetched Post Title:", post.get("title", "No title found"))
 
-def generate_log(data):
-    log_data = ["User logged in", "User updated profile", "Report exported"]
 
-    if isinstance(data,list):
-        filename=f"log_{datetime.now().strftime('%Y%m%d')}.csv"
-        with open(filename,"w",newline="") as file:
-            for entry in log_data:
-                file.write(f"{entry}\n")
-
-        print(f"Log written to {filename}")
 
     # STEP 2: Generate a filename with today's date (e.g., "log_20250408.txt")
     # Hint: Use datetime.now().strftime("%Y%m%d")
